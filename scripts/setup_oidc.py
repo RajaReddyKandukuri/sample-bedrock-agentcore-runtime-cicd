@@ -136,6 +136,8 @@ def create_github_role(iam_client, provider_arn, github_repo):
                     "bedrock:ListFoundationModels",     # List available models
                     "bedrock-agentcore:*",              # AgentCore runtime operations
                     "bedrock-agentcore-control:*",      # AgentCore control plane operations
+                    "bedrock:ListGuardrails",
+                    "bedrock:CreateGuardrail",
                     
                     # Additional AgentCore Control permissions
                     "bedrock-agentcore-control:CreateAgentRuntime",
