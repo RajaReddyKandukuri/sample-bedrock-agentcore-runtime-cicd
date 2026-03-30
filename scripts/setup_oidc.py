@@ -60,7 +60,7 @@ def create_oidc_provider(iam_client):
         # Check if GitHub OIDC provider already exists
         providers = iam_client.list_open_id_connect_providers()
         for provider in providers["OpenIDConnectProviderList"]:
-            if github_url in provider["Arn"]:
+            if "token.actions.githubusercontent.com" in provider["Arn"]:
                 logger.info(f"GitHub OIDC provider already exists: {provider['Arn']}")
                 return provider["Arn"]
         
@@ -165,6 +165,7 @@ def create_github_role(iam_client, provider_arn, github_repo):
                     "iam:GetRole",                      # Read role information
                     "iam:PutRolePolicy",               # Attach policies to roles
                     "iam:PassRole",                    # Pass roles to AWS services
+                    "iam:CreateServiceLinkedRole",      # Required for AgentCore service linked role
                     
                     # CloudWatch Logs for monitoring
                     "logs:CreateLogGroup",              # Create log groups
